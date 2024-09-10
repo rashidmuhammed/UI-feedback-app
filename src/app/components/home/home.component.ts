@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
+import { UserAuthService } from '../../services/user-auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -13,8 +15,12 @@ export class HomeComponent implements OnInit {
   isMobile: boolean = true;
   isCollapsed: boolean = true;
   currentNav: string = 'view';
+  userRole: string = '';
 
-  constructor(private obs: BreakpointObserver) {}
+  constructor(
+    private obs: BreakpointObserver,
+    private userService: UserAuthService
+  ) {}
 
   ngOnInit(): void {
     this.obs.observe(['(max-width: 800px)']).subscribe((screenSize) => {
@@ -24,6 +30,10 @@ export class HomeComponent implements OnInit {
         this.isMobile = false;
       }
     });
+
+    this.userRole = this.userService.getCurrentUserRole();
+
+    console.log(this.userRole);
   }
 
   toggleMenu() {
@@ -40,5 +50,10 @@ export class HomeComponent implements OnInit {
 
   toggleNav(currentNavName: string) {
     this.currentNav = currentNavName;
+  }
+
+  logout() {
+    console.log('hai');
+    this.userService.userLogout();
   }
 }

@@ -11,10 +11,14 @@ import { EmployeesComponent } from './components/employees/employees.component';
 import { EmployeeManageComponent } from './components/employee-manage/employee-manage.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
+  HTTP_INTERCEPTORS,
   provideHttpClient,
   withInterceptorsFromDi,
 } from '@angular/common/http';
 import { UserAuthService } from './services/user-auth.service';
+import { LoaderComponent } from './components/loader/loader.component';
+import { AuthInterceptor } from './interceptors/auth.service';
+import { UserModelComponent } from './dialoges/user-model/user-model.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,6 +26,8 @@ import { UserAuthService } from './services/user-auth.service';
     HomeComponent,
     EmployeesComponent,
     EmployeeManageComponent,
+    LoaderComponent,
+    UserModelComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,6 +40,7 @@ import { UserAuthService } from './services/user-auth.service';
     provideAnimationsAsync(),
     provideHttpClient(withInterceptorsFromDi()), // Use new method for configuring HttpClient
     UserAuthService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

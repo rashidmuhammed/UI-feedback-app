@@ -1,0 +1,18 @@
+.mat-icon {
+  color: #ff5722;
+}
+
+.edit {
+  background-color: rgb(108, 231, 108);
+  color: black;
+}
+
+.assign {
+  background-color: rgb(234, 169, 48);
+  color: black;
+}
+
+.button-flex-container {
+  display: flex;
+  gap: 4px;
+}

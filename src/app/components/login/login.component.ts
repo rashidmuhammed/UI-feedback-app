@@ -37,7 +37,12 @@ export class LoginComponent implements OnInit {
           const accessToken = response.accessToken;
 
           localStorage.setItem('accessToken', accessToken);
-          this.route.navigate(['/home/employees']);
+          const role = this.userService.getCurrentUserRole();
+          if (role === 'admin') {
+            this.route.navigate(['/home/employees']);
+          } else {
+            this.route.navigate(['/home/manage-employee']);
+          }
 
           console.log('Login successful', response);
         },

@@ -2,7 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from '../../models/user';
 import { MatPaginator } from '@angular/material/paginator';
 import { UserAuthService } from '../../services/user-auth.service';
-
+import { UserModelComponent } from '../../dialoges/user-model/user-model.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-employees',
   templateUrl: './employees.component.html',
@@ -17,7 +18,10 @@ export class EmployeesComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private userService: UserAuthService) {}
+  constructor(
+    private userService: UserAuthService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.loadEmployees(this.pageIndex, this.pageSize);
@@ -28,7 +32,7 @@ export class EmployeesComponent implements OnInit {
       next: (data: any) => {
         console.log(data);
         this.dataSource = data.users;
-        this.totalItems = data.totalCount;
+        this.totalItems = data.totalUsers;
       },
       error: (err) => console.error('Error fetching users:', err),
     });
@@ -40,17 +44,21 @@ export class EmployeesComponent implements OnInit {
     this.loadEmployees(this.pageIndex, this.pageSize);
   }
 
-  openAssignDialog(_t36: any) {
-    throw new Error('Method not implemented.');
-  }
-  openAddEmployeeDialog() {
-    throw new Error('Method not implemented.');
-  }
-
   assignUser(_t23: any) {
     throw new Error('Method not implemented.');
   }
-  editUser(_t23: any) {
-    throw new Error('Method not implemented.');
+
+  //using same model for both edit and add
+  openUserForm(user?: User): void {
+    const dialogRef = this.dialog.open(UserModelComponent, {
+      width: '400px',
+      data: user ? { user } : {}, // If user is provided, pass it to the form
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadEmployees(this.pageIndex, this.pageSize); // Refresh the list after add/edit
+      }
+    });
   }
 }

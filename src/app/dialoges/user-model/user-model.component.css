@@ -1,0 +1,27 @@
+.dialog-container {
+  display: flex;
+  justify-content: center; /* Center align horizontally */
+  align-items: center; /* Center align vertically */
+  flex-direction: column;
+  height: 100%;
+  padding: 20px;
+}
+
+.user-form {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: auto;
+}
+
+.full-width {
+  width: 80%;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}

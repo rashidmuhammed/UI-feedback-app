@@ -1,0 +1,74 @@
+<h2 mat-dialog-title>{{ isEditMode ? "Edit User" : "Add User" }}</h2>
+
+<div class="dialog-container">
+  <form [formGroup]="userForm" (ngSubmit)="onSave()" class="user-form">
+    <!-- Name Field -->
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" placeholder="Enter name" />
+      <mat-error
+        *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched"
+      >
+        Name is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>email</mat-label>
+      <input matInput formControlName="email" placeholder="Enter email" />
+      <mat-error
+        *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched"
+      >
+        email is required
+      </mat-error>
+      <mat-error *ngIf="userForm.get('email')?.errors?.['email']">
+        Enter eamil correctly
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Role Field -->
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Role</mat-label>
+      <input matInput formControlName="role" placeholder="Enter role" />
+      <mat-error
+        *ngIf="userForm.get('role')?.invalid && userForm.get('role')?.touched"
+      >
+        Role is required
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Feedback Field -->
+    <mat-form-field appearance="fill" class="full-width" *ngIf="!isEditMode">
+      <mat-label>password</mat-label>
+
+      <input matInput formControlName="password" placeholder="Enter password" />
+      <mat-error *ngIf="userForm.get('password')?.errors?.['required']">
+        Password is required.
+      </mat-error>
+    </mat-form-field>
+
+    <ng-container>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>feedback</mat-label>
+        <textarea
+          matInput
+          formControlName="feedbac"
+          placeholder="Enter feedback"
+        ></textarea>
+      </mat-form-field>
+    </ng-container>
+
+    <!-- Action Buttons -->
+    <div mat-dialog-actions class="button-container">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="userForm.invalid"
+      >
+        {{ isEditMode ? "Save" : "Add" }}
+      </button>
+      <button mat-button (click)="onCancel()">Cancel</button>
+    </div>
+  </form>
+</div>
