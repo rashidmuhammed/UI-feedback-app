@@ -1,0 +1,43 @@
+<mat-toolbar class="header">
+  <button mat-icon-button aria-label="Menu icon" (click)="toggleMenu()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <h1></h1>
+</mat-toolbar>
+<mat-sidenav-container autosize>
+  <mat-sidenav
+    class="sidebar-container"
+    [ngClass]="!isCollapsed ? 'expanded' : ''"
+    [mode]="isMobile ? 'over' : 'side'"
+    [opened]="isMobile ? 'false' : 'true'"
+  >
+    <mat-nav-list>
+      <a
+        mat-list-item
+        [ngClass]="{ active: currentNav === 'view' }"
+        (click)="toggleNav('view')"
+        routerLink="/home/employees"
+      >
+        <span class="entry">
+          <mat-icon>group</mat-icon>
+          <span *ngIf="!isCollapsed">View all employ</span>
+        </span>
+      </a>
+      <a
+        mat-list-item
+        [ngClass]="{ active: currentNav === 'manage' }"
+        (click)="toggleNav('manage')"
+        routerLink="/home/manage-employee"
+      >
+        <span class="entry">
+          <mat-icon>edit</mat-icon>
+          <span *ngIf="!isCollapsed">manageemployee</span>
+        </span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <h2>Content</h2>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

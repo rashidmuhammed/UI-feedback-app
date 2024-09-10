@@ -1,0 +1,48 @@
+<div class="login-form-flex">
+  <mat-card class="login-card">
+    <mat-card-title>Login</mat-card-title>
+    <mat-card-content class="login-card-content">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>User Name</mat-label>
+          <input matInput formControlName="email" placeholder="User Name" />
+          <mat-error *ngIf="loginForm.get('email')?.errors?.['required']">
+            User Name is required.
+          </mat-error>
+          <!-- <mat-error *ngIf="loginForm.get('email')?.errors?.['minlength']">
+            User Name must be at least 3 characters long.
+          </mat-error> -->
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Password</mat-label>
+          <input
+            type="password"
+            matInput
+            formControlName="password"
+            placeholder="Password"
+          />
+          <mat-error *ngIf="loginForm.get('password')?.errors?.['required']">
+            Password is required.
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('password')?.errors?.['minlength']">
+            Password must be at least 6 characters long.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-card-actions>
+          <div class="button-flex-container">
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="loginForm.invalid"
+            >
+              Login
+            </button>
+          </div>
+        </mat-card-actions>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

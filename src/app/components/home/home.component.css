@@ -1,0 +1,59 @@
+h1 {
+  padding: 0 1rem;
+}
+
+h2 {
+  padding: 1rem;
+}
+
+mat-toolbar {
+  position: fixed;
+  top: 0;
+  z-index: 2;
+}
+
+mat-sidenav-container {
+  height: 100%;
+}
+
+mat-sidenav {
+  width: 100px;
+  padding-top: 3.5rem;
+  @media screen and (min-width: 600px) {
+    padding-top: 4rem;
+  }
+
+  .entry {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+  }
+}
+
+mat-sidenav-content {
+  padding-top: 3.5rem;
+  @media screen and (min-width: 600px) {
+    padding-top: 4rem;
+  }
+}
+
+.mat-icon {
+  color: #ff5722;
+}
+
+.header {
+  background-color: rgb(66, 66, 168);
+}
+
+.sidebar-container {
+  background-color: rgb(164, 231, 231);
+}
+
+.active {
+  background-color: rgb(220, 220, 168);
+}
+
+.expanded {
+  width: 250px;
+}
