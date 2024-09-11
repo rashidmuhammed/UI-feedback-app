@@ -20,14 +20,17 @@ export class UserAuthService {
   public updateUserURL = 'http://localhost:8000/users/updateUser';
   public registerUserURL = 'http://localhost:8000/users/register';
   public deleteUserURL = 'http://localhost:8000/users/delteUser';
+  public getAllUsersURL = 'http://localhost:8000/users/getAllusers';
+  public assignmentURL = 'http://localhost:8000/tasks/assigments';
+  //URL For When a normal user is logged in, if they have any assignments, they will receive the ID of the employee for whom they need to enter feedback
+  public getassignedUserIdURL =
+    'http://localhost:8000/tasks/getTaskForLoggedUser';
 
   constructor(private http: HttpClient, private route: Router) {}
 
   userLogin(data: any): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-
     return this.http
-      .post(this.loginURL, data, { headers })
+      .post(this.loginURL, data)
       .pipe(catchError(this.handleError));
   }
 
@@ -37,8 +40,8 @@ export class UserAuthService {
     );
   }
 
-  updateUser(data: User, id: string): Observable<User[]> {
-    return this.http.put<User[]>(`${this.updateUserURL}?id=${id}`, data);
+  updateUser(data: User, id: string): Observable<any> {
+    return this.http.put<any>(`${this.updateUserURL}?id=${id}`, data);
   }
 
   createUser(data: User): Observable<User[]> {
@@ -59,6 +62,45 @@ export class UserAuthService {
     }
 
     return userRole;
+  }
+  getCurrentUserId() {
+    let userId = '';
+    let user: any;
+    let helper = new JwtHelperService();
+    let token = localStorage.getItem('accessToken');
+
+    if (token) {
+      let decodedToken = helper.decodeToken(token);
+      console.log(decodedToken?.user);
+      user = decodedToken?.user;
+      userId = user.id;
+    }
+
+    return userId;
+  }
+
+  getAllusers(): Observable<User[]> {
+    return this.http.get<User[]>(this.getAllUsersURL);
+  }
+
+  assignEmployees(adminId: string, assignedTo: string, employees: string[]) {
+    const body = {
+      adminId,
+      assignedTo,
+      employees,
+    };
+    return this.http.post(this.assignmentURL, body);
+  }
+
+  fetchEmployeeFeedbackId(id: string): Observable<any> {
+    let body = {
+      employeeId: id,
+    };
+    return this.http.post<any>(this.getassignedUserIdURL, body);
+  }
+
+  getUserById(id: string): Observable<any> {
+    return this.http.get<any>(`http://localhost:8000/users/${id}`);
   }
 
   userLogout() {

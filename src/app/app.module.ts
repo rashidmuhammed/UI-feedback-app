@@ -19,6 +19,9 @@ import { UserAuthService } from './services/user-auth.service';
 import { LoaderComponent } from './components/loader/loader.component';
 import { AuthInterceptor } from './interceptors/auth.service';
 import { UserModelComponent } from './dialoges/user-model/user-model.component';
+import { AssignModelComponent } from './dialogs/assign-model/assign-model.component';
+import { ToastrModule } from 'ngx-toastr';
+import { FeedbacComponent } from './components/feedbac/feedbac.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +31,8 @@ import { UserModelComponent } from './dialoges/user-model/user-model.component';
     EmployeeManageComponent,
     LoaderComponent,
     UserModelComponent,
+    AssignModelComponent,
+    FeedbacComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +40,7 @@ import { UserModelComponent } from './dialoges/user-model/user-model.component';
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
+    ToastrModule.forRoot(),
   ],
   providers: [
     provideAnimationsAsync(),

@@ -6,9 +6,11 @@ import { EmployeesComponent } from './components/employees/employees.component';
 import { EmployeeManageComponent } from './components/employee-manage/employee-manage.component';
 import { authGuard } from './auth.guard';
 import { userRoleAuthGuard } from './user-role-auth.guard';
+import { FeedbacComponent } from './components/feedbac/feedbac.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
+  { path: 'login', component: LoginComponent },
   {
     path: 'home',
     component: HomeComponent,
@@ -22,11 +24,10 @@ const routes: Routes = [
       {
         path: 'manage-employee',
         component: EmployeeManageComponent,
-        canActivateChild: [userRoleAuthGuard],
       },
+      { path: 'feedbac/:id', component: FeedbacComponent },
     ],
   },
-  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({

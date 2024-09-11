@@ -32,6 +32,11 @@ export class HomeComponent implements OnInit {
     });
 
     this.userRole = this.userService.getCurrentUserRole();
+    if (this.userRole === 'admin') {
+      this.currentNav = 'view';
+    } else {
+      this.currentNav = 'task';
+    }
 
     console.log(this.userRole);
   }

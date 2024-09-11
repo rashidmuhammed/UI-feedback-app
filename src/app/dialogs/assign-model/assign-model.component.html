@@ -1,0 +1,39 @@
+<h2 mat-dialog-title>Assign Employees for Feedback</h2>
+<mat-dialog-content>
+  <mat-form-field appearance="fill" style="width: 100%">
+    <mat-label>Assigned To</mat-label>
+    <mat-select
+      [(ngModel)]="selectedEmployee"
+      placeholder="Select Employee"
+      (selectionChange)="checkSelection()"
+    >
+      <mat-option *ngFor="let employee of employees" [value]="employee._id">
+        {{ employee.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" style="width: 100%; margin-top: 20px">
+    <mat-label>Choose Employees</mat-label>
+    <mat-select
+      multiple
+      [(ngModel)]="selectedEmployees"
+      (selectionChange)="checkSelection()"
+    >
+      <mat-option *ngFor="let employee of employees" [value]="employee._id">
+        {{ employee?.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="isAssignDisabled"
+    (click)="onAssign()"
+  >
+    Assign
+  </button>
+</mat-dialog-actions>

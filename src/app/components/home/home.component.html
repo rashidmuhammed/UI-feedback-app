@@ -36,10 +36,23 @@
           <span *ngIf="!isCollapsed">Logout</span>
         </span>
       </a>
+      <ng-container *ngIf="userRole === 'emp'">
+        <a
+          mat-list-item
+          [ngClass]="{ active: currentNav === 'task' }"
+          (click)="toggleNav('task')"
+          routerLink="home/manage-employee"
+        >
+          <span class="entry">
+            <mat-icon>task</mat-icon>
+            <span *ngIf="!isCollapsed">view tasks</span>
+          </span>
+        </a>
+      </ng-container>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content style="padding: 5px; margin-top: 25px">
-    <h2>Users</h2>
+    <h2></h2>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

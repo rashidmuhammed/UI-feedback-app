@@ -4,6 +4,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { UserAuthService } from '../../services/user-auth.service';
 import { UserModelComponent } from '../../dialoges/user-model/user-model.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AssignModelComponent } from '../../dialogs/assign-model/assign-model.component';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-employees',
   templateUrl: './employees.component.html',
@@ -15,16 +17,32 @@ export class EmployeesComponent implements OnInit {
   totalItems: number = 0;
   pageSize = 10;
   pageIndex = 0;
+  public employees: User[] = [];
+  public id: string = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private userService: UserAuthService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private toaster: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.loadEmployees(this.pageIndex, this.pageSize);
+    this.getAllUsers();
+
+    this.id = this.userService.getCurrentUserId();
+  }
+
+  //for get all users
+  getAllUsers() {
+    this.userService.getAllusers().subscribe({
+      next: (user) => {
+        console.log(user);
+        this.employees = user;
+      },
+    });
   }
   //for pagination
   loadEmployees(pageIndex: number, pageSize: number): void {
@@ -45,7 +63,26 @@ export class EmployeesComponent implements OnInit {
   }
 
   assignUser(_t23: any) {
-    throw new Error('Method not implemented.');
+    const dialogRef = this.dialog.open(AssignModelComponent, {
+      width: '400px',
+      data: { employees: this.employees },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // Call API to save the assignment
+        this.assignEmployees(this.id, result.assignedTo, result.employees);
+      }
+    });
+  }
+
+  assignEmployees(id: string, assignedTo: string, employees: string[]) {
+    this.userService
+      .assignEmployees(id, assignedTo, employees)
+      .subscribe((response) => {
+        this.toaster.success('successfully assigned ');
+        // Handle the response after assignment is successful
+      });
   }
 
   //using same model for both edit and add

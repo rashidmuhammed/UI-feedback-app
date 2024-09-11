@@ -4,10 +4,10 @@
     <mat-card-content class="login-card-content">
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="fill" class="full-width-input">
-          <mat-label>User Name</mat-label>
+          <mat-label>email</mat-label>
           <input matInput formControlName="email" placeholder="User Name" />
           <mat-error *ngIf="loginForm.get('email')?.errors?.['required']">
-            User Name is required.
+            email is required.
           </mat-error>
           <!-- <mat-error *ngIf="loginForm.get('email')?.errors?.['minlength']">
             User Name must be at least 3 characters long.
