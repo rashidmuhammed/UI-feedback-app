@@ -11,7 +11,7 @@ import { UserAuthService } from '../../services/user-auth.service';
 })
 export class FeedbacComponent implements OnInit {
   public feedback: string = '';
-  feedbackId: string | null = null;
+  feedbackId: string = '';
 
   constructor(
     private route: Router,
@@ -21,8 +21,8 @@ export class FeedbacComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.router.paramMap.subscribe((params) => {
-      this.feedbackId = params.get('id');
+    this.router.paramMap.subscribe((params: any) => {
+      this.feedbackId = params['id'];
       console.log('Feedback ID:', this.feedbackId);
     });
   }
@@ -33,11 +33,11 @@ export class FeedbacComponent implements OnInit {
       return;
     }
 
-    const updateFeedbacck = {
-      feedbac: this.feedback,
-    };
+    // const updateFeedbacck = {
+    //   feedbac: this.feedback,
+    // };
 
-    // this.userService.updateUser(updateFeedbacck,this.feedbackId)
+    // this.userService.updateUser(updateFeedbacck, this.feedbackId);
 
     // this.toast.success('Feedback submitted:');
 

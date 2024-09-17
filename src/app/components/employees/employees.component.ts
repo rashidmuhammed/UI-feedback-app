@@ -70,7 +70,6 @@ export class EmployeesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // Call API to save the assignment
         this.assignEmployees(this.id, result.assignedTo, result.employees);
       }
     });
@@ -81,20 +80,35 @@ export class EmployeesComponent implements OnInit {
       .assignEmployees(id, assignedTo, employees)
       .subscribe((response) => {
         this.toaster.success('successfully assigned ');
-        // Handle the response after assignment is successful
       });
+  }
+
+  delete(user: User) {
+    const isConfirmed = window.confirm(
+      'Are you sure you want to delete this user?'
+    );
+
+    if (isConfirmed) {
+      this.userService.deleteUser(user._id).subscribe({
+        next: () => {
+          this.toaster.success('User deleted successfully'),
+            this.loadEmployees(this.pageIndex, this.pageSize);
+        },
+        error: (err) => console.error('Error deleting user', err),
+      });
+    }
   }
 
   //using same model for both edit and add
   openUserForm(user?: User): void {
     const dialogRef = this.dialog.open(UserModelComponent, {
       width: '400px',
-      data: user ? { user } : {}, // If user is provided, pass it to the form
+      data: user ? { user } : {},
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.loadEmployees(this.pageIndex, this.pageSize); // Refresh the list after add/edit
+        this.loadEmployees(this.pageIndex, this.pageSize);
       }
     });
   }

@@ -12,6 +12,11 @@
   color: black;
 }
 
+.danger {
+  background-color: rgb(221, 66, 66);
+  color: black !important;
+}
+
 .button-flex-container {
   display: flex;
   gap: 4px;

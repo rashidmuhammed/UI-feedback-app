@@ -16,6 +16,7 @@ export class UserAuthService {
   public loginURL: string = 'http://localhost:8000/users/login';
   public getPaginatedUsersURL =
     'http://localhost:8000/users/getAllPginatedUser';
+  public deleteUserUrl = 'http://localhost:8000/users/delteUser';
 
   public updateUserURL = 'http://localhost:8000/users/updateUser';
   public registerUserURL = 'http://localhost:8000/users/register';
@@ -40,8 +41,12 @@ export class UserAuthService {
     );
   }
 
-  updateUser(data: User, id: string): Observable<any> {
-    return this.http.put<any>(`${this.updateUserURL}?id=${id}`, data);
+  updateUser(data: any, id: string): Observable<User[]> {
+    return this.http.put<User[]>(`${this.updateUserURL}?id=${id}`, data);
+  }
+
+  deleteUser(id: string): Observable<any> {
+    return this.http.delete<any>(`${this.deleteUserURL}?id=${id}`);
   }
 
   createUser(data: User): Observable<User[]> {
